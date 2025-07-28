@@ -17,6 +17,10 @@ int main()
     printf("Enter CSV Victim: ");
     scanf("%s", &input);
 
+    char input2;
+    printf("Enter Seperation Type (t for token, c for column): ");
+    scanf(" %c", &input2);
+
     FILE *fp;
     char row[255];
     fp = fopen(input, "r");
@@ -32,14 +36,27 @@ int main()
     TokenCount tokens[MAX_TOKENS];
     int tokenIndex = 0;
 
+    if (input2 != 'c' && input2 != 't') 
+    {
+        printf("Seperation Type '%s' Not Valid\n", &input2);
+        return 0;
+    }
+
     while (feof(fp) != 1)
     {
 
         fgets(row, 255, fp);
         
         row[strcspn(row, "\n")] = '\0';
-
-        char *token = strtok(row, " ,");
+        
+        char *token;
+        if (input2 == 'c') 
+        {
+            token = strtok(row, ",");
+        } else if (input2 == 't') 
+        {
+            token = strtok(row, " ,");
+        }
         while (token != NULL)
         {
             int found = 0;
@@ -59,7 +76,13 @@ int main()
                 tokens[tokenIndex].count = 1;
                 tokenIndex++;
             }
-            token = strtok(NULL, " ,");
+            if (input2 == 'c') 
+            {
+                token = strtok(NULL, ",");
+            } else if (input2 == 't') 
+            {
+                token = strtok(NULL, " ,");
+            }
         }
     }
     fprintf(fp2, "Token,Count\n");
