@@ -2,7 +2,7 @@
 A tool to count how many times a token or a column is repeated in a csv file.
 
 # How to compile
-EzDel can be compiled with cmake
+CSV SKIM can be compiled with cmake
 ```
 mkdir build
 cd build
